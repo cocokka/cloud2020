@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Editor.md examples</title>
+    <link rel="stylesheet" href="../static/css/editormd.preview.min.css"/>
+    <link rel="stylesheet" href="../static/css/editormd.css"/>
+</head>
+<body>
+<!-- 因为我们使用了dark主题，所以在容器div上加上dark的主题类，实现我们自定义的代码样式 -->
+<div class="content editormd-preview-theme" id="editormd-view" name="editormd-view">
+    <textarea style="display:none;" name="editormd-markdown-doc" th:text="${content.getTextContent()}"></textarea>
+</div>
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/lib/marked.min.js"></script>
+<script src="../static/lib/prettify.min.js"></script>
+<script src="../static/js/editormd.min.js"></script>
+<script type="text/javascript">
+    console.log($("#content").text())
+    // editormd.markdownToHTML("content");
+    editormdView = editormd.markdownToHTML("editormd-view", {
+        // markdown        : markdown ,//+ "\r\n" + $("#append-test").text(),
+        //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+        htmlDecode      : "style,script,iframe",  // you can filter tags decode
+        //toc             : false,
+        // tocm            : true,    // Using [TOCM]
+        // emoji           : true,
+        // taskList        : true,
+        // tex             : true,  // 默认不解析
+        // flowChart       : true,  // 默认不解析
+        // sequenceDiagram : true,  // 默认不解析
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露所有端点。*在YAML中有特殊的含义，所以如果要包含(或排除)所有端点，请务必添加引号
+        include: '*'
+
+server:
+  port: 8401
+
+spring:
+  application:
+    name: cloud-alibaba-sentinel
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: http://localhost:8080 #控制台
+        port: 8719 #监控端口，如果被占用，默认会自动+1，一直找到未占用端口为止

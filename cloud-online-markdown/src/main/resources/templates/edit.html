@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Simple example - Editor.md examples</title>
+    <link rel="stylesheet" href="../static/css/style.css"/>
+    <link rel="stylesheet" href="../static/css/editormd.css"/>
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+
+<div id="layout">
+    <header>
+        <label>标题：</label><input type="text" id="title" name="title" th:value="${content.getTitle()}"/>
+        <p style="display:none;" th:text="${content.getId()}" id="id" name="id"/>
+        <!--<p>Please press F12, open the develop tools.</p>-->
+    </header>
+    <div id="test-editormd">
+        <textarea style="display:none;" id="textContent" name="textContent" th:text="${content.getTextContent()}"></textarea>
+        <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+        <textarea id="text" class="editormd-html-textarea" name="text"></textarea>
+    </div>
+</div>
+
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/editormd.min.js"></script>
+<script type="text/javascript">
+    var testEditor;
+
+    $(function () {
+        testEditor = editormd("test-editormd", {
+            width: "90%",
+            height: 640,
+            // autoHeight: true,
+            syncScrolling: "single",
+            path: "../static/lib/",
+            // previewTheme: "dark",
+            saveHTMLToTextarea: true,
+
+            /**下述为新增，上面一行记得加逗号结束*/
+            /*指定需要显示的功能按钮*/
+            toolbarIcons: function () {
+                return ["undo", "redo", "|", "bold", "italic", "ucwords", "uppercase", "lowercase", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "list-ul", "list-ol", "table", "datetime", "hr", "||", "watch", "fullscreen", "preview", "releaseIcon", "index"]
+            },
+
+            /*自定义功能按钮*/
+            toolbarIconTexts: {
+                releaseIcon: "<span bgcolor=\"gray\">发布</span>",
+                index: "<span bgcolor=\"red\">返回首页</span>",
+            },
+
+            /*给自定义按钮指定回调函数*/
+            toolbarHandlers: {
+                releaseIcon: function (cm, icon, cursor, selection) {
+                    saveHtml();//提交表单代码在下面
+                },
+                index: function () {
+                    window.location.href = '/contents/all';
+                },
+            }
+
+        });
+
+    });
+
+    function saveHtml() {
+        // console.log($("#text").text());
+        console.log($("#title").val());
+        console.log($("#textContent").text());
+        const id = $("#id").text();
+        console.log(id);
+        $.ajax({
+            url: "/contents/" + id,
+            type: "put",
+            async: true,
+            data: {
+                "title": $("#title").val(),
+                "text": $("#text").text(),
+                "textContent": $("#textContent").text()
+            },
+            dataType: "json",
+            success: function (data) {
+                // alert(data.code);
+                // alert(data.message);
+                // alert(data.data.id);
+                window.location.href = '/contents/' + id;
+                // location.reload();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus); // parse error;
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

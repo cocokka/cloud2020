@@ -1,0 +1,36 @@
+server:
+  port: 8004
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.gjt.mm.mysql.Driver
+    url: jdbc:mysql://192.168.25.128:3306/cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+
+  cloud:
+    consul:
+      discovery:
+        host: 192.168.25.128
+        port: 8500
+        # 启用服务发现
+        enabled: true
+        # 启用服务注册
+        register: true
+        # 服务停止时取消注册
+        deregister: true
+        # 表示注册时使用IP而不是hostname
+        prefer-ip-address: true
+        # 执行监控检查的频率
+        health-check-interval: 30s
+        # 设置健康检查失败多长时间后，取消注册
+        health-check-critical-timeout: 30s
+        # 健康检查的路径
+        health-check-path: /actuator/info
+        # 服务注册标识，格式为：应用名称+服务器IP+端口
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

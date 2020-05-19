@@ -1,0 +1,17 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: cloud-alibaba-payment
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露所有端点。*在YAML中有特殊的含义，所以如果要包含(或排除)所有端点，请务必添加引号
+        include: "*"

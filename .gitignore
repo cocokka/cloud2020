@@ -1,0 +1,24 @@
+# Project exclude paths
+/cloud-alibaba-config3377/target/
+/cloud-alibaba-provider-payment9001/target/
+/cloud-alibaba-provider-payment9002/target/
+/cloud-alibaba-sentinel8401/target/
+/cloud-api-common/target/
+/cloud-api-gateway9527/target/
+/cloud-consumer-openfeign-order80/target/
+/cloud-consumer-order80/target/
+/cloud-consumerconsul-order80/target/
+/cloud-consumerzk-order80/target/
+/cloud-eureka-server7001/target/
+/cloud-eureka-server7002/target/
+/cloud-hystrix-consumer-order80/target/
+/cloud-hystrix-dashboard9001/target/
+/cloud-hystrix-provider-payment8001/target/
+/cloud-oauth2-client/target/
+/cloud-oauth2-server/target/
+/cloud-online-markdown/target/
+/cloud-provider-payment8001/target/
+/cloud-provider-payment8002/target/
+/cloud-provider-payment8004/target/
+/cloud-provider-payment8006/target/
+/cloud-stream-kafka-provider8801/target/
